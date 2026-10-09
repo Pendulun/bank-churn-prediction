@@ -14,4 +14,4 @@ At the projects root folder and with `uv` installed, run: `uv sync`. This will c
 
 ## Downloading data
 
-To download the dataset, run: `uv run python src/data/download_data.py`. It will download the data at `./data/BankChurners.csv`
+To download the dataset, run: `uv run python src/data/download_data.py`. It will download the data at `./data/raw/BankChurners.csv`
