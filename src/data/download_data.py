@@ -11,7 +11,8 @@ logging.basicConfig(
 
 logger = logging.getLogger(__name__)
 
-if __name__ == "__main__":
+
+def run():
     # Download latest version
     logger.info(
         f"Downloading {config.DATASET_NAME} to {config.RAW_DATASET_DIR}...")
@@ -20,3 +21,7 @@ if __name__ == "__main__":
                                output_dir=config.RAW_DATASET_DIR)
 
     logging.info("Done!")
+
+
+if __name__ == "__main__":
+    run()
