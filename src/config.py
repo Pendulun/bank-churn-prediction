@@ -16,6 +16,10 @@ THRESH_TUNNING_DATASET_PATH = SPLITTED_DATASET_DIR + "threshold_tunning.csv"
 
 ASSETS_DIR_PATH = BASE_DATA_DIR + "assets/"
 DATA_VIZ_DIR_PATH = ASSETS_DIR_PATH + "data_viz/"
+MODEL_EVAL_DIR_PATH = ASSETS_DIR_PATH + "model_eval/"
+
+MODELS_DIR = "./models/"
+BASE_MODELS_DIR = MODELS_DIR + "base/"
 
 # MODELING
 Y_COL = "Attrition_Flag"
@@ -23,3 +27,5 @@ RANDOM_STATE = 42
 TEST_SIZE_P = 0.1
 CALIB_SIZE_P = 0.2
 THRESH_TUNNING_SIZE_P = 0.5
+# I'm using just 2 cols
+INPUT_COLS = ['Total_Trans_Ct', 'Months_Inactive_12_mon']

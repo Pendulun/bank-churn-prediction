@@ -55,3 +55,27 @@ This is a very interesting plot that shows that people who have churned have les
 The plot above shows that people who have more than ~50 transactions are less likely to churn. Also, people with less than ~20 transactions are more likely to churn. Between 20-50 transactions is kind of a grey area.
 
 See more plots at the Kaggle notebook link in the introduction or at the `./data/assets/data_viz/` folder.
+
+## 6. Fitting models
+
+This step evaluates two models: Logistic Regression and Decision Tree Classifier. These are simple models but, as writen in the introduction, I wanted to focus on the process rather than on the details. On a real context, I'd test Random Forests, KNNClassifiers and more features (I'm only using 2 features).
+
+To execute a GridSearchCV over hiperparameters for those 2 models, run: `uv run python src/model/fit_models.py`. This will produce the best estimators for each family in `./models/base/` and evaluation plots at `./data/assets/model_eval/`.
+
+### 6.1 Main plots
+
+![ROC Curve](data/assets/model_eval/base_roc_curve.png)
+![Precision-Recall Curve](data/assets/model_eval/precision_recall_curve.png)
+
+
+From the plots above, we see that, using OOF predictions, the decision tree classifier has a greater ROC-AUC (0.85 vs 0.82) and AP (0.50 vs 0.39). The first one means that it is better in ranking positive instances above negative ones. The second on means that it is able to maintain a better trade-off between precision and recall across different classification thresholds, resulting in a higher average precision.
+
+![Precision at k Curve](data/assets/model_eval/precision_at_k_curve.png)
+
+We see that the Decision tree model is way better than the logistic regression model up to 30% of the ranked instances. Starting from the 30%, both models achieve the same precision@k
+
+![Deciles Lift Curve](data/assets/model_eval/deciles_lift_curve.png)
+
+Given the plot above, we see that the decision model has a greater lift than the logistic regression model up until about 30% of the ranking produced. The Decision Tree model is able to achieve ~3.5X lift at the first 30% of the ranking it produces, which means that it is about 3.5 times better than the overall 16% of positive rate on the training data.
+
+See more plots at the Kaggle notebook link in the introduction or at the `./data/assets/model_eval/` folder.
