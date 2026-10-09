@@ -3,15 +3,21 @@ Churn prediction with a [Kaggle dataset](https://www.kaggle.com/datasets/sakshig
 
 The objective is to have a model that estimates churn probabilities by customer.
 
+See also [the Kaggle notebook version of this project](https://www.kaggle.com/code/pendulun/bank-churn-prediction-model-calib-thresh-tunning).
+
 # Requirements
 
 This project requires Python >=3.13. It is recomended to use `uv` to install all dependencies.
 
 # Steps
 
-## Install dependencies
+## 1. Install dependencies
 At the projects root folder and with `uv` installed, run: `uv sync`. This will create a virtual environment inside the project with all the dependencies.
 
-## Downloading data
+## 2. Downloading data
 
 To download the dataset, run: `uv run python src/data/download_data.py`. It will download the data at `./data/raw/BankChurners.csv`
+
+## 3. Preprocessing
+
+The preprocessing is just a binarization of the target y column with integer values as it is originally a string column. To preprocess the raw data run `uv run python src/preprocessing/preprocess.py`. It will save the new data at `./data/preprocessed/data.csv`

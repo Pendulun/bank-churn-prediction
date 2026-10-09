@@ -1,7 +1,7 @@
 #PATHS
 DATASET_NAME = "sakshigoyal7/credit-card-customers"
 
-BASE_DATA_DIR = ".data/"
+BASE_DATA_DIR = "./data/"
 RAW_DATASET_DIR = BASE_DATA_DIR + "raw/"
 DATASET_FILE_NAME = "BankChurners.csv"
 RAW_DATASET_PATH = RAW_DATASET_DIR + DATASET_FILE_NAME
