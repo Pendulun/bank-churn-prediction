@@ -28,7 +28,7 @@ def get_train_test_split(data: pd.DataFrame,
     return train_X, test_X, train_Y, test_Y
 
 
-def main():
+def run():
     logger = get_logger()
     logger.info("Loading preprocessed data...")
     try:
@@ -99,4 +99,4 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    run()

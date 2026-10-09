@@ -25,10 +25,20 @@ def binarize_col_inplace(data: pd.DataFrame, col: str,
     return data
 
 
-def main():
+def load_raw_data() -> pd.DataFrame:
+    data = pd.read_csv(config.RAW_DATASET_PATH)
+    unwanted_cols = [
+        "Naive_Bayes_Classifier_Attrition_Flag_Card_Category_Contacts_Count_12_mon_Dependent_count_Education_Level_Months_Inactive_12_mon_1",
+        "Naive_Bayes_Classifier_Attrition_Flag_Card_Category_Contacts_Count_12_mon_Dependent_count_Education_Level_Months_Inactive_12_mon_2"
+    ]
+    data.drop(columns=unwanted_cols, inplace=True)
+    return data
+
+
+def run():
     logger = get_logger()
     logger.info(f"Reading raw dataset at {config.RAW_DATASET_PATH}")
-    data = pd.read_csv(config.RAW_DATASET_PATH)
+    data = load_raw_data()
     logger.info(f"Preprocessing...")
     preprocessed = binarize_col_inplace(data, config.Y_COL,
                                         'Attrited Customer')
@@ -40,4 +50,4 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    run()
