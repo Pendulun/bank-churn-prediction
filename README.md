@@ -21,3 +21,14 @@ To download the dataset, run: `uv run python src/data/download_data.py`. It will
 ## 3. Preprocessing
 
 The preprocessing is just a binarization of the target y column with integer values as it is originally a string column. To preprocess the raw data run `uv run python src/preprocessing/preprocess.py`. It will save the new data at `./data/preprocessed/data.csv`
+
+## 4. Splitting data
+
+This step splits data into 4 disjoint sets: Training, Calibration, Threshold Tunning and Testing sets. Each one is responsible for:
+
+1. Training set (72%): Hiperparameter tunning with cross-validation to evaluate models configs.
+2. Calibration set (9%): Used to transform models `predict_proba` outputs into reliable probabilities of churning.
+3. Threshold tunninng set (9%): Used to optimize the threshold that decides whether or not someone will churn based on a (business) metric.
+4. Testing set (10%): Used to evaluate the models generalization capabilities.
+
+To split the preprocessed data into these 4 sets, run: `uv run python src/spliting_data/split_data.py`. All data splits will be saved at `./data/splitted/`.
