@@ -32,3 +32,26 @@ This step splits data into 4 disjoint sets: Training, Calibration, Threshold Tun
 4. Testing set (10%): Used to evaluate the models generalization capabilities.
 
 To split the preprocessed data into these 4 sets, run: `uv run python src/spliting_data/split_data.py`. All data splits will be saved at `./data/splitted/`.
+
+## 5. Data Viz
+
+Now, we plot some features against the target. To do so, run: `uv run python src/data_viz/plots.py`. All plots will be created at `./data/assets/data_viz`
+
+### 5.1 Main findings
+
+![Features correlation with Y](data/assets/data_viz/corrs_with_target.png)
+
+We see that the features with the most negative correlations do make sense: If someone have more transactions in a giving time, it is fair to say that this person is less likely churn.
+
+Features with significant positive correlation with churn include the total months inactive (which also make sense and probably is correlated with transactions) and contacts count. I suppose that the bank, already having detected that the person might churn, increased the contacts with them. So I don't think this would be a good feature to predict churn, as it probably comes after the person would already be going to churn. I want to estimate the churn probability before the banck starts contacting that person.
+
+![Total transactions vs Y](data/assets/data_viz/Total_Trans_Ct_vs_y.png)
+
+
+This is a very interesting plot that shows that people who have churned have less transactions.
+
+![Churn rate vs transactions](data/assets/data_viz/churn_rate_by_trans_count.png)
+
+The plot above shows that people who have more than ~50 transactions are less likely to churn. Also, people with less than ~20 transactions are more likely to churn. Between 20-50 transactions is kind of a grey area.
+
+See more plots at the Kaggle notebook link in the introduction or at the `./data/assets/data_viz/` folder.
