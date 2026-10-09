@@ -14,9 +14,9 @@ logger = logging.getLogger(__name__)
 if __name__ == "__main__":
     # Download latest version
     logger.info(
-        f"Downloading {config.DATASET_NAME} to {config.DATASET_DIR}...")
+        f"Downloading {config.DATASET_NAME} to {config.RAW_DATASET_DIR}...")
     kagglehub.dataset_download(config.DATASET_NAME,
                                path=config.DATASET_FILE_NAME,
-                               output_dir=config.DATASET_DIR)
+                               output_dir=config.RAW_DATASET_DIR)
 
     logging.info("Done!")
