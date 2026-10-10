@@ -17,9 +17,11 @@ THRESH_TUNNING_DATASET_PATH = SPLITTED_DATASET_DIR + "threshold_tunning.csv"
 ASSETS_DIR_PATH = BASE_DATA_DIR + "assets/"
 DATA_VIZ_DIR_PATH = ASSETS_DIR_PATH + "data_viz/"
 MODEL_EVAL_DIR_PATH = ASSETS_DIR_PATH + "model_eval/"
+MODEL_CALIB_DIR_PATH = ASSETS_DIR_PATH + "calibration/"
 
 MODELS_DIR = "./models/"
 BASE_MODELS_DIR = MODELS_DIR + "base/"
+CALIB_MODELS_DIR = MODELS_DIR + "calib/"
 
 # MODELING
 Y_COL = "Attrition_Flag"
