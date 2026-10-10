@@ -4,8 +4,7 @@ from sklearn.linear_model import LogisticRegression
 from sklearn.model_selection import GridSearchCV, StratifiedKFold
 from sklearn.tree import DecisionTreeClassifier
 
-from src import config, loaders, utils
-from src.model import eval_model
+from src import config, loaders, plotting, utils
 
 
 def grid_search_models(models: dict,
@@ -69,33 +68,33 @@ def get_models_grid() -> dict:
 
 
 def plot_all(oof_predictions: dict, Y: pd.Series):
-    eval_model.roc_curve(oof_predictions,
-                         Y.values,
-                         plot_path=config.MODEL_EVAL_DIR_PATH +
-                         "base_roc_curve.png")
-    eval_model.precision_recall_curve(oof_predictions,
-                                      Y.values,
-                                      plot_path=config.MODEL_EVAL_DIR_PATH +
-                                      "precision_recall_curve.png")
-
-    precisions_at_k = eval_model.get_precisions_at_k(Y, oof_predictions)
-    eval_model.plot_precisions_at_k(precisions_at_k,
+    plotting.roc_curve(oof_predictions,
+                       Y.values,
+                       plot_path=config.MODEL_EVAL_DIR_PATH +
+                       "base_roc_curve.png")
+    plotting.precision_recall_curve(oof_predictions,
+                                    Y.values,
                                     plot_path=config.MODEL_EVAL_DIR_PATH +
-                                    "precision_at_k_curve.png")
+                                    "precision_recall_curve.png")
+
+    precisions_at_k = utils.get_precisions_at_k(Y, oof_predictions)
+    plotting.plot_precisions_at_k(precisions_at_k,
+                                  plot_path=config.MODEL_EVAL_DIR_PATH +
+                                  "precision_at_k_curve.png")
 
     gain_at_k = utils.get_gain_at_k(Y, oof_predictions)
     lift_at_k = utils.get_lift_at_k(Y, oof_predictions)
     lift_per_decile = utils.get_lift_per_decile(Y, oof_predictions)
 
-    eval_model.plot_gain_at_k(gain_at_k,
-                              plot_path=config.MODEL_EVAL_DIR_PATH +
-                              "gain_at_k_curve.png")
-    eval_model.plot_lift_at_k(lift_at_k,
-                              plot_path=config.MODEL_EVAL_DIR_PATH +
-                              "lift_at_k_curve.png")
-    eval_model.plot_lift_at_deciles(lift_per_decile,
-                                    plot_path=config.MODEL_EVAL_DIR_PATH +
-                                    "deciles_lift_curve.png")
+    plotting.plot_gain_at_k(gain_at_k,
+                            plot_path=config.MODEL_EVAL_DIR_PATH +
+                            "gain_at_k_curve.png")
+    plotting.plot_lift_at_k(lift_at_k,
+                            plot_path=config.MODEL_EVAL_DIR_PATH +
+                            "lift_at_k_curve.png")
+    plotting.plot_lift_at_deciles(lift_per_decile,
+                                  plot_path=config.MODEL_EVAL_DIR_PATH +
+                                  "deciles_lift_curve.png")
 
 
 def run():

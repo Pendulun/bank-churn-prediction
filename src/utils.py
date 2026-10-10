@@ -39,6 +39,20 @@ def get_oof_preds(models: dict, X, y) -> np.ndarray:
     return oof_predictions
 
 
+def get_precisions_at_k(y_true: pd.Series, y_preds_per_model: dict) -> dict:
+    precisions_at_k = dict()
+    total_size = y_true.shape[0]
+    ks = [int(total_size * pctg / 100) for pctg in range(1, 101)]
+    for model_name, preds in y_preds_per_model.items():
+        sorted_idxs = np.argsort(preds)[::-1]
+        sorted_real = y_true.reset_index(drop=True).loc[sorted_idxs]
+
+        for k in ks:
+            precisions_at_k.setdefault(model_name, list()).append(
+                sorted_real[:k].sum() / k)
+    return precisions_at_k
+
+
 def get_gain_at_k(y_true: pd.Series, y_preds_per_model: dict) -> dict:
     gain_at_k = dict()
     for model_name, preds in y_preds_per_model.items():

@@ -4,8 +4,7 @@ from sklearn.calibration import CalibratedClassifierCV
 from sklearn.frozen import FrozenEstimator
 from sklearn.model_selection import StratifiedKFold
 
-from src import config, loaders, utils
-from src.calibration import plot_calibration
+from src import config, loaders, plotting, utils
 
 
 def calibrate_models(models: dict,
@@ -65,8 +64,7 @@ def run():
     pathlib.Path(config.MODEL_CALIB_DIR_PATH).mkdir(parents=True,
                                                     exist_ok=True)
     target_plot = config.MODEL_CALIB_DIR_PATH + "calibration_display.png"
-    plot_calibration.plot_calibration_display(all_results, train_Y,
-                                              target_plot)
+    plotting.plot_calibration_display(all_results, train_Y, target_plot)
 
     logger.info("Saving calibrated models...")
     loaders.save_models(config.CALIB_MODELS_DIR, calib_models)
