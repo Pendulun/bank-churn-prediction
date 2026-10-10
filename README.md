@@ -11,6 +11,8 @@ This project requires Python >=3.13. It is recomended to use `uv` to install all
 
 # Steps
 
+You can run all the steps below with `uv run python src/main.py` or follow along and run each on separately.
+
 ## 1. Install dependencies
 At the projects root folder and with `uv` installed, run: `uv sync`. This will create a virtual environment inside the project with all the dependencies.
 
