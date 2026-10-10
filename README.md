@@ -79,3 +79,15 @@ We see that the Decision tree model is way better than the logistic regression m
 Given the plot above, we see that the decision model has a greater lift than the logistic regression model up until about 30% of the ranking produced. The Decision Tree model is able to achieve ~3.5X lift at the first 30% of the ranking it produces, which means that it is about 3.5 times better than the overall 16% of positive rate on the training data.
 
 See more plots at the Kaggle notebook link in the introduction or at the `./data/assets/model_eval/` folder.
+
+## 7. Calibrating models
+
+This step makes it so that the probabilities given by the model more accurately represents the mean probability of the target to be positive. If we don't do this, an output of 0.4 from a `predict_proba` call doesn't really mean that 40% of similar data are going to churn.
+
+To calibrate the fitted models on the previous step, run: `uv run python src/calibration/calibrate_models.py`. The calibrated models will be saved at `./models/calib/` and the calibration plot at `./data/assets/calibration/`.
+
+![Calibration Display](./data/assets/calibration/calibration_display.png)
+
+We see from the plot above that the mean probabilities given by the uncalibrated decision tree makes a monotonic function whereas the uncalibrated logistic function does not. This makes it so that the decision tree probabilities are more reliable. Nonetheless, both curves are far from the perfectly calibrated curve. While the real fraction of positives doesn't go past 0.5, the models probabilities achieve near 1 values.
+
+After calibrating, we see now that the decision tree model nearly matches the 'Perfectly calibrated' dashed line. The logistic model also has a better curve. Both curves stay below the (0.6, 0.6) point in the plot. This is because we are dealing with a higly imbalanced dataset with only about 16% of positive instances. In this case, if we predict a probability of 60% of churn, this is more than 3.5 times the base churn rate.
