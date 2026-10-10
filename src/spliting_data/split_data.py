@@ -3,7 +3,7 @@ import pandas as pd
 import pathlib
 from sklearn.model_selection import train_test_split
 
-from src import config
+from src import config, loaders
 
 
 def get_logger() -> logging.Logger:
@@ -80,22 +80,20 @@ def run():
     )
 
     logger.info(f"Saving train set to {config.TRAIN_DATASET_PATH}...")
-    train_X[config.Y_COL] = train_Y
-    train_X.to_csv(config.TRAIN_DATASET_PATH, index=None)
+    loaders.save_splited_data_as_one(train_X, train_Y,
+                                     config.TRAIN_DATASET_PATH)
 
     logger.info(f"Saving test set to {config.TEST_DATASET_PATH}...")
-    test_X[config.Y_COL] = test_Y
-    test_X.to_csv(config.TEST_DATASET_PATH, index=None)
+    loaders.save_splited_data_as_one(test_X, test_Y, config.TEST_DATASET_PATH)
 
     logger.info(f"Saving calibration set to {config.CALIB_DATASET_PATH}...")
-    cal_X[config.Y_COL] = cal_Y
-    cal_X.to_csv(config.CALIB_DATASET_PATH, index=None)
+    loaders.save_splited_data_as_one(cal_X, cal_Y, config.CALIB_DATASET_PATH)
 
     logger.info(
         f"Saving threshold tunning set to {config.THRESH_TUNNING_DATASET_PATH}..."
     )
-    thresh_X[config.Y_COL] = thresh_Y
-    thresh_X.to_csv(config.THRESH_TUNNING_DATASET_PATH, index=None)
+    loaders.save_splited_data_as_one(thresh_X, thresh_Y,
+                                     config.THRESH_TUNNING_DATASET_PATH)
 
 
 if __name__ == "__main__":

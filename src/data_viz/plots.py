@@ -4,7 +4,7 @@ import pandas as pd
 import pathlib
 import seaborn as sns
 
-from src import config
+from src import config, loaders
 
 
 def get_logger() -> logging.Logger:
@@ -75,14 +75,6 @@ def relplot_between_feats_divided_by_target(X: pd.DataFrame,
     plt.close()
 
 
-def get_x_y_data() -> tuple[pd.DataFrame, pd.Series]:
-    data = pd.read_csv(config.TRAIN_DATASET_PATH)
-
-    train_X = data.drop(columns=[config.Y_COL])
-    train_Y = data[config.Y_COL]
-    return train_X, train_Y
-
-
 def plot_numerical(X: pd.DataFrame, Y: pd.Series):
     plot_feats_corr_with_target(X, Y, dir_path=config.DATA_VIZ_DIR_PATH)
 
@@ -123,7 +115,8 @@ def run():
     logger = get_logger()
     logger.info("Loading train set...")
 
-    train_X, train_Y = get_x_y_data()
+    train_X, train_Y = loaders.load_splitted_data(config.TRAIN_DATASET_PATH,
+                                                  all_x_cols=True)
 
     pathlib.Path(config.DATA_VIZ_DIR_PATH).mkdir(exist_ok=True, parents=True)
 

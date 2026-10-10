@@ -1,4 +1,3 @@
-import joblib
 import logging
 import pandas as pd
 import pathlib
@@ -81,14 +80,6 @@ def get_models_grid() -> dict:
     return models
 
 
-def load_train_data():
-    data = pd.read_csv(config.TRAIN_DATASET_PATH)
-
-    train_X = data[config.INPUT_COLS]
-    train_Y = data[config.Y_COL]
-    return train_X, train_Y
-
-
 def plot_all(oof_predictions: dict, Y: pd.Series):
     eval_model.roc_curve(oof_predictions,
                          Y.values,
@@ -123,7 +114,7 @@ def run():
     logger = get_logger()
 
     logger.info("Loading training data...")
-    X, Y = load_train_data()
+    X, Y = loaders.load_splitted_data(config.TRAIN_DATASET_PATH)
 
     logger.info("Grid Searching...")
     models_grid = get_models_grid()

@@ -21,20 +21,6 @@ def get_logger() -> logging.Logger:
     return logger
 
 
-def load_calib_data() -> tuple[pd.DataFrame, pd.Series]:
-    data = pd.read_csv(config.CALIB_DATASET_PATH)
-    calib_X = data[config.INPUT_COLS]
-    calib_Y = data[config.Y_COL]
-    return calib_X, calib_Y
-
-
-def load_training_data() -> tuple[pd.DataFrame, pd.Series]:
-    data = pd.read_csv(config.TRAIN_DATASET_PATH)
-    X = data[config.INPUT_COLS]
-    y = data[config.Y_COL]
-    return X, y
-
-
 def calibrate_models(models: dict,
                      cal_X: pd.DataFrame,
                      cal_Y: pd.Series,
@@ -65,7 +51,7 @@ def run():
     base_models = loaders.load_models(config.BASE_MODELS_DIR)
 
     logger.info("Loading calibration data...")
-    calib_X, calib_Y = load_calib_data()
+    calib_X, calib_Y = loaders.load_splitted_data(config.CALIB_DATASET_PATH)
 
     logger.info("Calibrating models...")
     calib_models = calibrate_models(base_models,
@@ -75,7 +61,7 @@ def run():
                                     random_seed=config.RANDOM_STATE)
 
     logger.info("Loading training data...")
-    train_X, train_Y = load_training_data()
+    train_X, train_Y = loaders.load_splitted_data(config.TRAIN_DATASET_PATH)
 
     logger.info("Getting OOF predictions...")
     base_oof_predictions = utils.get_oof_preds(base_models, train_X, train_Y)
