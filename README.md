@@ -110,3 +110,21 @@ logistic: best threshold = 0.1515
 ```
 
 These values are way lower than the 0.5 default.
+
+## 9. Run on test data
+
+Finally, let's apply our models to the testing data. We'll also compare how the threshold tunned models compare against those who only use the 0.5 threshold. To do this, run: `uv run python src/testing/test.py`. It will load the calibrated and threshold tunned models and evaluate them on the testing set. All plots will be saved at `./data/assets/test/`
+
+![Testing results](data/assets/test/test_results.png)
+
+We see that the logistic model has a greater benefit from threshold tuning on the testing data. We also see that the decision tree model achieves a better f1-score.
+
+Lets see how the gain and lift plots compare between the threshold tunned models.
+
+![Gain at k test](data/assets/test/test_gain_at_k.png)
+![Lift at k test](data/assets/test/test_lift_at_k.png)
+![Lift at deciles test](data/assets/test/test_lift_per_decile.png)
+
+From the plots above, we see that the decision tree model still has a greater cumulative lift than the logistic model up for the top 30% instances with the greatest probability of churning.
+
+As this is the same result achieved during training, it means that the model has a good generalizability. Also, the ranking it produced could be helpful with targeting for the bank.
