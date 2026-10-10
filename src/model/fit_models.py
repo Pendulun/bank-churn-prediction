@@ -6,7 +6,7 @@ from sklearn.linear_model import LogisticRegression
 from sklearn.model_selection import GridSearchCV, StratifiedKFold
 from sklearn.tree import DecisionTreeClassifier
 
-from src import config
+from src import config, utils
 from src.model import eval_model
 
 
@@ -104,9 +104,9 @@ def plot_all(oof_predictions: dict, Y: pd.Series):
                                     plot_path=config.MODEL_EVAL_DIR_PATH +
                                     "precision_at_k_curve.png")
 
-    gain_at_k = eval_model.get_gain_at_k(Y, oof_predictions)
-    lift_at_k = eval_model.get_lift_at_k(Y, oof_predictions)
-    lift_per_decile = eval_model.get_lift_per_decile(Y, oof_predictions)
+    gain_at_k = utils.get_gain_at_k(Y, oof_predictions)
+    lift_at_k = utils.get_lift_at_k(Y, oof_predictions)
+    lift_per_decile = utils.get_lift_per_decile(Y, oof_predictions)
 
     eval_model.plot_gain_at_k(gain_at_k,
                               plot_path=config.MODEL_EVAL_DIR_PATH +
