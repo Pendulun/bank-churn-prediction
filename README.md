@@ -91,3 +91,22 @@ To calibrate the fitted models on the previous step, run: `uv run python src/cal
 We see from the plot above that the mean probabilities given by the uncalibrated decision tree makes a monotonic function whereas the uncalibrated logistic function does not. This makes it so that the decision tree probabilities are more reliable. Nonetheless, both curves are far from the perfectly calibrated curve. While the real fraction of positives doesn't go past 0.5, the models probabilities achieve near 1 values.
 
 After calibrating, we see now that the decision tree model nearly matches the 'Perfectly calibrated' dashed line. The logistic model also has a better curve. Both curves stay below the (0.6, 0.6) point in the plot. This is because we are dealing with a higly imbalanced dataset with only about 16% of positive instances. In this case, if we predict a probability of 60% of churn, this is more than 3.5 times the base churn rate.
+
+## 8. Threshold tunning
+
+We are trying to predict who will churn. Okay, that's about done. We do have a calibrated model that gives a probability that someone will churn. But a probability alone does not tell us what action to take.
+
+Suppose our model predicts that a customer has a 40% probability of churning. Should we classify this customer as likely to churn? What about a customer with a 20% probability? Or 60%?
+
+To turn probabilities into binary predictions, we need a decision threshold. The default value of 0.5 is not necessarily the threshold that gives the best performance for our objective. Since we want to balance precision and recall, we can tune the threshold to maximize the F1-score.
+
+To tunne the decision threshold for the calibrated models, run: `uv run python src/thresh_tunning/thresh_tune.py`. It will print out the best values found for each model and save the tunned models into `./models/thresh_tuned/`. As the models classes are `TunedThresholdClassifierCV`, the instances saved already have the best threshold saved along the base (calibrated) model.
+
+The best thresholds found by model are:
+
+```
+decision_tree: best threshold = 0.2906
+logistic: best threshold = 0.1515
+```
+
+These values are way lower than the 0.5 default.
