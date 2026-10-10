@@ -6,7 +6,7 @@ from sklearn.calibration import CalibratedClassifierCV
 from sklearn.frozen import FrozenEstimator
 from sklearn.model_selection import StratifiedKFold
 
-from src import config, utils
+from src import config, loaders, utils
 from src.calibration import plot_calibration
 
 
@@ -19,18 +19,6 @@ def get_logger() -> logging.Logger:
 
     logger = logging.getLogger(__name__)
     return logger
-
-
-def load_base_models(models_dir: str) -> dict:
-    target_dir = pathlib.Path(models_dir)
-    target_models_files = target_dir.glob("*joblib")
-    models = dict()
-    for model_path in target_models_files:
-        model_name = model_path.stem
-        model = joblib.load(model_path)
-        models[model_name] = model
-
-    return models
 
 
 def load_calib_data() -> tuple[pd.DataFrame, pd.Series]:
@@ -74,7 +62,7 @@ def calibrate_models(models: dict,
 def run():
     logger = get_logger()
     logger.info("Loading base models...")
-    base_models = load_base_models(config.BASE_MODELS_DIR)
+    base_models = loaders.load_models(config.BASE_MODELS_DIR)
 
     logger.info("Loading calibration data...")
     calib_X, calib_Y = load_calib_data()
@@ -108,9 +96,7 @@ def run():
                                               target_plot)
 
     logger.info("Saving calibrated models...")
-    pathlib.Path(config.CALIB_MODELS_DIR).mkdir(exist_ok=True, parents=True)
-    for model_name, model in calib_models.items():
-        joblib.dump(model, config.CALIB_MODELS_DIR + f"{model_name}.joblib")
+    loaders.save_models(config.CALIB_MODELS_DIR, calib_models)
 
 
 if __name__ == "__main__":

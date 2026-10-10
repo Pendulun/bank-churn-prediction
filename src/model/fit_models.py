@@ -6,7 +6,7 @@ from sklearn.linear_model import LogisticRegression
 from sklearn.model_selection import GridSearchCV, StratifiedKFold
 from sklearn.tree import DecisionTreeClassifier
 
-from src import config, utils
+from src import config, loaders, utils
 from src.model import eval_model
 
 
@@ -130,16 +130,14 @@ def run():
     best_models = grid_search_models(models_grid, X, Y)
 
     logger.info("Getting OOF predictions...")
-    oof_predictions = eval_model.get_oof_preds(best_models, X, Y)
+    oof_predictions = utils.get_oof_preds(best_models, X, Y)
 
     logger.info("Plotting...")
     pathlib.Path(config.MODEL_EVAL_DIR_PATH).mkdir(exist_ok=True, parents=True)
     plot_all(oof_predictions, Y)
 
     logger.info("Saving models...")
-    pathlib.Path(config.BASE_MODELS_DIR).mkdir(exist_ok=True, parents=True)
-    for model_name, model in best_models.items():
-        joblib.dump(model, config.BASE_MODELS_DIR + f"{model_name}.joblib")
+    loaders.save_models(config.BASE_MODELS_DIR, best_models)
 
 
 if __name__ == "__main__":
