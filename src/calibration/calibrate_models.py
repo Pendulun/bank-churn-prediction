@@ -1,5 +1,3 @@
-import joblib
-import logging
 import pandas as pd
 import pathlib
 from sklearn.calibration import CalibratedClassifierCV
@@ -8,17 +6,6 @@ from sklearn.model_selection import StratifiedKFold
 
 from src import config, loaders, utils
 from src.calibration import plot_calibration
-
-
-def get_logger() -> logging.Logger:
-    logging.basicConfig(
-        level=logging.INFO,
-        format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
-        datefmt="%Y-%m-%d %H:%M:%S",
-    )
-
-    logger = logging.getLogger(__name__)
-    return logger
 
 
 def calibrate_models(models: dict,
@@ -46,7 +33,7 @@ def calibrate_models(models: dict,
 
 
 def run():
-    logger = get_logger()
+    logger = utils.get_logger(__name__)
     logger.info("Loading base models...")
     base_models = loaders.load_models(config.BASE_MODELS_DIR)
 

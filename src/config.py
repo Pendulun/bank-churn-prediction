@@ -22,6 +22,7 @@ MODEL_CALIB_DIR_PATH = ASSETS_DIR_PATH + "calibration/"
 MODELS_DIR = "./models/"
 BASE_MODELS_DIR = MODELS_DIR + "base/"
 CALIB_MODELS_DIR = MODELS_DIR + "calib/"
+THRESH_TUNNED_MODELS_DIR = MODELS_DIR + "thresh_tuned/"
 
 # MODELING
 Y_COL = "Attrition_Flag"

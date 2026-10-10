@@ -1,8 +1,20 @@
+import logging
 import numpy as np
 import pandas as pd
 from sklearn.model_selection import StratifiedKFold, cross_val_predict
 
 from src import config
+
+
+def get_logger(logger_name: str) -> logging.Logger:
+    logging.basicConfig(
+        level=logging.INFO,
+        format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
+        datefmt="%Y-%m-%d %H:%M:%S",
+    )
+
+    logger = logging.getLogger(logger_name)
+    return logger
 
 
 def get_oof_preds(models: dict, X, y) -> np.ndarray:

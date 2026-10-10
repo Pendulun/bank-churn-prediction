@@ -1,20 +1,8 @@
-import logging
 import pandas as pd
 import pathlib
 from sklearn.model_selection import train_test_split
 
-from src import config, loaders
-
-
-def get_logger() -> logging.Logger:
-    logging.basicConfig(
-        level=logging.INFO,
-        format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
-        datefmt="%Y-%m-%d %H:%M:%S",
-    )
-
-    logger = logging.getLogger(__name__)
-    return logger
+from src import config, loaders, utils
 
 
 def get_train_test_split(data: pd.DataFrame,
@@ -29,7 +17,7 @@ def get_train_test_split(data: pd.DataFrame,
 
 
 def run():
-    logger = get_logger()
+    logger = utils.get_logger(__name__)
     logger.info("Loading preprocessed data...")
     try:
         data = pd.read_csv(config.PREPROCESSED_DATASET_PATH)

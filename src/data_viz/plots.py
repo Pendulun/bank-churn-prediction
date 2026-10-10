@@ -1,21 +1,9 @@
-import logging
 import matplotlib.pyplot as plt
 import pandas as pd
 import pathlib
 import seaborn as sns
 
-from src import config, loaders
-
-
-def get_logger() -> logging.Logger:
-    logging.basicConfig(
-        level=logging.INFO,
-        format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
-        datefmt="%Y-%m-%d %H:%M:%S",
-    )
-
-    logger = logging.getLogger(__name__)
-    return logger
+from src import config, loaders, utils
 
 
 def plot_feats_corr_with_target(X: pd.DataFrame,
@@ -112,7 +100,7 @@ def plot_numerical(X: pd.DataFrame, Y: pd.Series):
 
 
 def run():
-    logger = get_logger()
+    logger = utils.get_logger(__name__)
     logger.info("Loading train set...")
 
     train_X, train_Y = loaders.load_splitted_data(config.TRAIN_DATASET_PATH,

@@ -1,4 +1,3 @@
-import logging
 import pandas as pd
 import pathlib
 from sklearn.linear_model import LogisticRegression
@@ -7,17 +6,6 @@ from sklearn.tree import DecisionTreeClassifier
 
 from src import config, loaders, utils
 from src.model import eval_model
-
-
-def get_logger() -> logging.Logger:
-    logging.basicConfig(
-        level=logging.INFO,
-        format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
-        datefmt="%Y-%m-%d %H:%M:%S",
-    )
-
-    logger = logging.getLogger(__name__)
-    return logger
 
 
 def grid_search_models(models: dict,
@@ -111,7 +99,7 @@ def plot_all(oof_predictions: dict, Y: pd.Series):
 
 
 def run():
-    logger = get_logger()
+    logger = utils.get_logger(__name__)
 
     logger.info("Loading training data...")
     X, Y = loaders.load_splitted_data(config.TRAIN_DATASET_PATH)
